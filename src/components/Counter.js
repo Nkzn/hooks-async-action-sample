@@ -1,6 +1,6 @@
 import React from 'react';
 import { useSelector, useDispatch } from 'react-redux';
-import { useAsyncActions } from '../asyncactions/counter';
+import { useCounterApplicationService } from '../servicehooks/counter';
 import { increment, decrement } from '../ducks/counter';
 
 export const Counters = () => {
@@ -29,17 +29,16 @@ const SyncCounter = () => {
 };
 
 const AsyncCounter = () => {
-  const count = useSelector(state => state.value);
-  const { incrementAsync, decrementAsync } = useAsyncActions();
+  const { count, service } = useCounterApplicationService();
 
   return (
     <div>
       <h3>Async Counter</h3>
-      <button onClick={() => decrementAsync(5)}>−5</button>
-      <button onClick={() => decrementAsync(1)}>−1</button>
+      <button onClick={() => service.decrementAsync(5)}>−5</button>
+      <button onClick={() => service.decrementAsync(1)}>−1</button>
       {count}
-      <button onClick={() => incrementAsync(1)}>＋1</button>
-      <button onClick={() => incrementAsync(5)}>＋5</button>
+      <button onClick={() => service.incrementAsync(1)}>＋1</button>
+      <button onClick={() => service.incrementAsync(5)}>＋5</button>
     </div>
   );
 }

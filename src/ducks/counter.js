@@ -12,6 +12,13 @@ export const decrement = (value) => ({
   }
 });
 
+export const update = (value) => ({
+  type: "update",
+  payload: {
+    value
+  }
+});
+
 export const reducer = (state = { value: 0 }, action) => {
   switch (action.type) {
     case "increment":
@@ -24,7 +31,12 @@ export const reducer = (state = { value: 0 }, action) => {
           ...state,
           value: state.value - action.payload.value
         };
-      default:
+    case "update":
+        return {
+          ...state,
+          value: action.payload.value
+        };
+    default:
       return state;
   }
 }

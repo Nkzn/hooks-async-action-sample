@@ -1,20 +1,20 @@
-import { useCallback } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
-import * as service from '../services/CounterApplicationService';
+import { createCounterApplicationService } from '../services/CounterApplicationService';
 
 export const useAsyncActions = () => {
   const dispatch = useDispatch();
   const count = useSelector(state => state.value);
+  const service = createCounterApplicationService(dispatch, count);
   
-  const incrementAsync = useCallback((value) => {
+  const incrementAsync = (value) => {
     console.log('increment', value);
-    service.incrementAsync({ amount: value, dispatch, count });
-  }, [dispatch, count]);
+    service.incrementAsync(value);
+  };
 
-  const decrementAsync = useCallback((value) => {
+  const decrementAsync = (value) => {
     console.log('decrement', value);
-    service.decrementAsync({ amount: value, dispatch, count });
-  }, [dispatch, count]);
+    service.decrementAsync(value);
+  };
 
   return { incrementAsync, decrementAsync };
 }

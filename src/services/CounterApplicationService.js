@@ -1,27 +1,18 @@
-import { update } from "../ducks/counter";
+import { increment, decrement } from "../ducks/counter";
 
-export class CounterApplicationService {
-  constructor(store) {
-    this.dispatch = store.dispatch;
-    this.getState = store.getState;
-  }
+export const incrementAsync = async ({ amount, dispatch, count }) => {
+  console.log('incrementAsync', { amount, dispatch, count });
+  await sleep(500); // dummy networking
 
-  async incrementAsync(amount) {
-    const state = this.getState();
-
-    await sleep(500); // dummy networking
-
-    this.dispatch(update(state.value + amount));
-  }
-
-  async decrementAsync(amount) {
-    const state = this.getState();
-
-    await sleep(500); // dummy networking
-
-    this.dispatch(update(state.value - amount));
-  }
+  dispatch(increment(amount));
 }
+
+export const decrementAsync = async ({ amount, dispatch, count }) => {
+  console.log('decrementAsync', { amount, dispatch, count });
+  await sleep(500); // dummy networking
+
+  dispatch(decrement(amount));
+};
 
 function sleep(millis) {
   return new Promise((resolve) => setTimeout(resolve, millis));
